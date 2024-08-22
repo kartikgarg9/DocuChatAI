@@ -26,22 +26,29 @@ const DocumentUpload: React.FC = () => {
       const token = await getFirebaseToken(); // Get the token
       if (!token) {
         alert("Failed to retrieve authentication token.");
+    
         return;
       }
+   console.log(token);
+ 
 
-      const response = await axios.post("http://localhost:3000/api/add", formData, {
+      const response = await axios.post("https://api-rwjjhxim5q-uc.a.run.app/api/add", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           "Authorization": `Bearer ${token}`, // Include the token in headers
         },
+      
       });
+      
 
       setUploadStatus(`Upload successful! Document ID: ${response.data.documentId}`);
     } catch (error) {
+      
       console.error("Error uploading document:", error);
       setUploadStatus("Upload failed. Please try again.");
     }
   };
+ 
 
   return (
     <div>

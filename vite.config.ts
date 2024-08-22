@@ -3,12 +3,11 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  server: {
-    proxy: {
-      "/api": {
-        target: "http://localhost:3000", // Replace with the port your backend server is running on
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ""),
+  build: {
+    outDir: "public", // Directory where the build files will be output
+    rollupOptions: {
+      input: {
+        main: "index.html", // Ensure this is correctly set
       },
     },
   },

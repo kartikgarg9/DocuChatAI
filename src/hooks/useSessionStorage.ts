@@ -1,4 +1,3 @@
-//src/hooks/useSessionStoage
 import { useState } from "react";
 
 export const useSessionStorage = () => {

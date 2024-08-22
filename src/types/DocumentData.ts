@@ -4,4 +4,6 @@ export interface DocumentData {
   extractedText: string;
   createdAt: string;
   hash: string; // Ensure this property is included
+  filename: string;
+  mimeType: string;
 }

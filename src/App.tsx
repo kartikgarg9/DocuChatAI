@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import ProtectedRoute from "./components/ProtectedRoute";
-
+import { ProtectedRoute } from "./components/ProtectedRoute";
 import { AuthContext } from "./context/AuthContext";
-import Home from "./pages/Home";
-import RegisterPage from "./pages/Users/RegisterPage";
-import SignInPage from "./pages/Users/SignInPage"
+import Home from "./hooks/pages/Home";
+import RegisterPage from "./hooks/pages/Users/RegisterPage";
+import SignInPage from "./hooks/pages/Users/SignInPage";
 import { UserType } from "./types";
+import ChatPage from "./hooks/pages/Users/ChatPage";
 
 function App() {
   const userFromStorage = sessionStorage.getItem("user");
@@ -27,6 +27,7 @@ function App() {
           />
           <Route path="/sign-in" element={<SignInPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/chat" element={ <ChatPage/>} />
         </Routes>
       </AuthContext.Provider>
     </Router>

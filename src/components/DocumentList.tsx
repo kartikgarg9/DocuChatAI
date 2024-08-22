@@ -1,7 +1,29 @@
+// src/components/DocumentList.tsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "../hooks/useAuth";
 import { DocumentData } from "../types/DocumentData";
+import { FaFilePdf, FaFileWord, FaFileExcel, FaFileImage, FaFile} from 'react-icons/fa';
+
+const getFileIcon = (filename: string) => {
+  const ext = filename.split('.').pop()?.toLowerCase();
+  switch (ext) {
+    case 'pdf':
+      return <FaFilePdf />;
+    case 'doc':
+    case 'docx':
+      return <FaFileWord />;
+    case 'xls':
+    case 'xlsx':
+      return <FaFileExcel />;
+    case 'jpg':
+    case 'jpeg':
+    case 'png':
+      return <FaFileImage />;
+    default:
+      return <FaFile />;
+  }
+};
 
 const DocumentList: React.FC = () => {
   const [documents, setDocuments] = useState<DocumentData[]>([]);
@@ -11,17 +33,16 @@ const DocumentList: React.FC = () => {
     const fetchDocuments = async () => {
       if (user?.userId) {
         try {
-          const response = await axios.get(`http://localhost:3000/api/documents/${user.userId}`);
+          const response = await axios.get(`https://api-rwjjhxim5q-uc.a.run.app/api/documents/${user.userId}`);
           
-          // Ensure the data is properly typed
           const documents: DocumentData[] = response.data.documents.map((doc: {
             id: string;
-            extractedText: string;
+            filename: string;
             createdAt: string;
             hash: string;
           }) => ({
             id: doc.id,
-            extractedText: doc.extractedText,
+            filename: doc.filename,
             createdAt: doc.createdAt,
             hash: doc.hash || "", // Provide a default value if hash is missing
           }));
@@ -44,8 +65,15 @@ const DocumentList: React.FC = () => {
         <ul>
           {documents.map((doc) => (
             <li key={doc.id}>
-              <p><strong>Extracted Text:</strong> {doc.extractedText}</p>
-              
+              <a 
+                href={`/chat?documentId=${doc.id}`} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'inherit' }}
+              >
+                {getFileIcon(doc.filename)}
+                <span style={{ marginLeft: 8 }}>{doc.filename}</span>
+              </a>
             </li>
           ))}
         </ul>

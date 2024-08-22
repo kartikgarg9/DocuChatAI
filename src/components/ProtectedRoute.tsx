@@ -6,7 +6,7 @@ interface ProtectedRouteProps {
   children: React.ReactNode;
 }
 
- export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
+const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const { user } = useContext(AuthContext);
 
   if (!user) {
@@ -16,4 +16,4 @@ interface ProtectedRouteProps {
   return <>{children}</>;
 };
 
-export default ProtectedRoute;
+export { ProtectedRoute };

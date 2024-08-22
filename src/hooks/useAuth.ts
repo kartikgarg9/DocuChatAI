@@ -1,17 +1,15 @@
-// src/hooks/useAuth.ts
-import { useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
-import { UserType } from "../types";
+import { UserType } from "../types/index";
+import { useUser } from "./useUser";
 
 export const useAuth = () => {
-  const { user, setUser } = useContext(AuthContext);
+  const { user, addUser, removeUser } = useUser();
 
   const login = (user: UserType) => {
-    setUser(user);
+    addUser(user);
   };
 
   const logout = () => {
-    setUser(null);
+    removeUser();
   };
 
   return { user, login, logout };

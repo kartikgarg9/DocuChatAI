@@ -10,7 +10,6 @@ import {
   signInWithGoogle,
 } from "../utils/firebase";
 
-
 interface AuthFormProps {
   mode: "signin" | "register";
   title: string;
@@ -85,7 +84,6 @@ const AuthForm = ({
         userId: user.uid || "",
         name: user.displayName || "",
         email: user.email || "",
-        createdAt: Date(),
       };
 
       login(userData);
